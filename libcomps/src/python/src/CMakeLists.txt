@@ -95,7 +95,7 @@ if ((${pversion} EQUAL 2) AND ENABLE_TESTS)
                     COMMENT "Running python binding tests")
 endif ()
 
-if (ENABLE_TESTS)
+if (NOT(${pversion} EQUAL 2) AND ENABLE_TESTS)
     add_custom_target(pytest_run COMMAND ./run_tests.sh
                     WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/libcomps/
                     COMMENT "Running python binding tests")
