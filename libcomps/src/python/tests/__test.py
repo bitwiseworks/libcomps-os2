@@ -734,6 +734,7 @@ class COMPSTest(unittest.TestCase):
         y = comps2.xml_str()
 
         self.assertTrue(x == y)
+        os.close(h)
         os.remove(fname)
 
     #@unittest.skip("")
