@@ -52,6 +52,13 @@ target_link_libraries(libcomps m)
 set_target_properties(libcomps PROPERTIES OUTPUT_NAME "comps")
 set_target_properties(libcomps PROPERTIES SOVERSION ${libcomps_VERSION_MAJOR})
 
+if(OS2)
+  set_target_properties(libcomps PROPERTIES
+    OS2_DEF_VENDOR "$ENV{VENDOR}"
+    OS2_DEF_PATCH "${libcomps_VERSION_PATCH}"
+    OS2_DEF_VERSION "${libcomps_VERSION_MAJOR}.${libcomps_VERSION_MINOR}.${libcomps_VERSION_PATCH}")
+endif()
+
 add_dependencies(libcomps src-copy)
 
 if (ENABLE_DEVELOPMENT OR "${libcomps_library_type}" STREQUAL "SHARED")

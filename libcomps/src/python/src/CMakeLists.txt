@@ -66,6 +66,10 @@ if (NOT OS2)
 else()
     add_custom_target(sym_pycomps ALL COMMAND
         ${CMAKE_COMMAND} -E create_symlink pycomps.dll ./libcomps/_libpycomps.dll)
+    set_target_properties(pycomps PROPERTIES
+      OS2_DEF_VENDOR "$ENV{VENDOR}"
+      OS2_DEF_PATCH "${libcomps_VERSION_PATCH}"
+      OS2_DEF_VERSION "${libcomps_VERSION_MAJOR}.${libcomps_VERSION_MINOR}.${libcomps_VERSION_PATCH}")
 endif()
     #set_target_properties(pycomps PROPERTIES LIBRARY_OUTPUT_NAME "_libpycomps")
     #add_dependencies(pycomps src-copy)
