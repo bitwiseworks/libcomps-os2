@@ -74,6 +74,7 @@ foreach(file ${TEST_FILES})
     #file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/${file} DESTINATION ./)
 endforeach()
 
+if (NOT OS2)
 add_custom_target(test_comps_run
                    COMMAND export LD_LIBRARY_PATH="${LIBCOMPS_OUT}/:$LD_LIBRARY_PATH"
                            && ./test_comps
@@ -87,6 +88,22 @@ add_custom_target(test_parse_run
                    WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
                    DEPENDS test_parse
                    COMMENT "Running comps_parse test")
+else()
+add_custom_target(test_comps_run
+                   COMMAND export BEGINLIBPATH="${LIBCOMPS_OUT}\;$BEGINLIBPATH"
+                           && ./test_comps
+                   WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
+                   DEPENDS test_comps
+                   COMMENT "Running comps test")
+
+add_custom_target(test_parse_run
+                   COMMAND export BEGINLIBPATH="${LIBCOMPS_OUT}\;$BEGINLIBPATH"
+                           && ./test_parse
+                   WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
+                   DEPENDS test_parse
+                   COMMENT "Running comps_parse test")
+endif()
+
 target_link_libraries(test_parse_run libcomps)
 target_link_libraries(test_comps_run libcomps)
 
