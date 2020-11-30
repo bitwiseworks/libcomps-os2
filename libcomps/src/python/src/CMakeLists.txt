@@ -125,6 +125,9 @@ IF (SKBUILD)
     INSTALL(TARGETS pycomps LIBRARY DESTINATION libcomps/src/python/src/libcomps)
 ELSE ()
     EXECUTE_PROCESS(COMMAND ${PYTHON_EXECUTABLE} -c "from sys import stdout; from distutils import sysconfig; stdout.write(sysconfig.get_python_lib(True))" OUTPUT_VARIABLE PYTHON_INSTALL_DIR)
+    if (OS2)
+       string(REPLACE $ENV{UNIXROOT} "/@unixroot" PYTHON_INSTALL_DIR ${PYTHON_INSTALL_DIR})
+    endif()
 
     INSTALL(FILES ${pycomps_SRCDIR}/libcomps/__init__.py DESTINATION ${PYTHON_INSTALL_DIR}/libcomps)
     #INSTALL(FILES ${pycomps_SRCDIR}/tests/__test.py DESTINATION
